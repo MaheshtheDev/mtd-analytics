@@ -67,6 +67,21 @@ CREATE TABLE "website_event" (
 );
 
 -- CreateTable
+CREATE TABLE "event_data" (
+    "event_id" UUID NOT NULL,
+    "website_id" UUID NOT NULL,
+    "website_event_id" UUID NOT NULL,
+    "event_key" VARCHAR(500) NOT NULL,
+    "event_string_value" VARCHAR(500),
+    "event_numeric_value" DECIMAL(19,4),
+    "event_date_value" TIMESTAMPTZ(6),
+    "event_data_type" INTEGER NOT NULL,
+    "created_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "event_data_pkey" PRIMARY KEY ("event_id")
+);
+
+-- CreateTable
 CREATE TABLE "team" (
     "team_id" UUID NOT NULL,
     "name" VARCHAR(50) NOT NULL,
@@ -145,6 +160,13 @@ CREATE INDEX "website_event_website_id_created_at_idx" ON "website_event"("websi
 CREATE INDEX "website_event_website_id_session_id_created_at_idx" ON "website_event"("website_id", "session_id", "created_at");
 
 -- CreateIndex
+CREATE INDEX "event_data_created_at_idx" ON "event_data"("created_at");
+
+-- CreateIndex
+CREATE INDEX "event_data_website_id_idx" ON "event_data"("website_id");
+
+-- CreateIndex
+CREATE INDEX "event_data_website_event_id_idx" ON "event_data"("website_event_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "team_team_id_key" ON "team"("team_id");
